@@ -1,0 +1,18 @@
+public async static void AppendTextFunction(string Endpoint, string result)
+{
+        try
+        {
+            string pathTxt = @"D:\TimerHiproms\LogTxt\";
+            string Tanggal = DateTime.Now.ToString("yyyyMMdd");
+            string PathFile = pathTxt + Tanggal.ToString().Trim() + ".txt";
+
+            using (StreamWriter sw = System.IO.File.AppendText(PathFile))
+            {
+                sw.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + ": /" + Endpoint + " | " + result);
+            }
+        }
+        catch (Exception ex)
+        {
+            var error = ex.Message;
+        }
+}

@@ -1,0 +1,42 @@
+function Register() {
+    var Usernames = $('#usernameR').val();
+    var Passwords = $('#passwordR').val();
+    var Namas = $('#namaR').val();
+
+    if (Usernames == "") {
+        alert("Username wajib diisi...");
+        return;
+    } else if (Passwords == "") {
+        alert("Password wajib diisi...");
+        return;
+    } else if (Namas == "") {
+        alert("Nama wajib diisi...");
+        return;
+    } else {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("AddRegister", "Home")',
+            cache: false,
+            async: true,
+            data: {
+                Usernames: Usernames,
+                Passwords: Passwords,
+                Namas: Namas
+            },
+            success: function(response) {
+                if (response.success == true) {
+                    alert(response.responseText);
+                    $('#usernameR').val("");
+                    $('#passwordR').val("");
+                    $('#namaR').val("");
+                    window.location.href = '@Url.Action("Index", "Home")';
+                } else {
+                    alert(response.responseText);
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(response.responseText);
+            }
+        });
+    }
+}

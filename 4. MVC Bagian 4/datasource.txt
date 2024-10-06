@@ -1,0 +1,27 @@
+public class DataService
+{
+    public MsProduct[] GetProduct(string KodeProduct)
+    {
+        dbAlmandTeknologiDataContext db = new dbAlmandTeknologiDataContext();
+        List<MsProduct> LstP = new List<MsProduct>();
+
+        try
+        {
+            var AllData = db.GetProduct(KodeProduct);
+            foreach (var M in AllData)
+            {
+                MsProduct mpro = new MsProduct();
+                mpro.kode_product = M.KodeProduct;
+                mpro.nama_product = M.NamaProduct;
+                mpro.uom = M.UoM;
+                mpro.brand = M.Brand;
+                LstP.Add(mpro);
+            }
+        }
+        catch (Exception ex)
+        {
+            AppendText.AppendTextFunction("GetProduct", "Error " + ex.Message.ToString());
+        }
+        return LstP.ToArray();
+    }
+}

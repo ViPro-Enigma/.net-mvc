@@ -1,0 +1,41 @@
+<script type="text/javascript">
+    function Login() {
+        var Usernames = $('#usernames').val();
+        var Passwords = $('#passwords').val();
+
+        if (Usernames == "") {
+            alert("Username wajib diisi...");
+            return;
+        }
+        else if (Passwords == "") {
+            alert("Password wajib diisi...");
+            return;
+        }
+        else {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("GetLogin", "Home")',
+                cache: false,
+                async: true,
+                data: {
+                    Usernames: Usernames,
+                    Passwords: Passwords
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        alert(response.responseText);
+                        $('#usernames').val("");
+                        $('#passwords').val("");
+                        window.location.href = '@Url.Action("Index", "Home")';
+                    }
+                    else {
+                        alert(response.responseText);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(response.responseText);
+                }
+            });
+        }
+    }
+</script>
